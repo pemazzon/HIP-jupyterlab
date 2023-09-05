@@ -18,14 +18,25 @@ LABEL app_tag=$TAG
 WORKDIR /apps/${APP_NAME}
 
 ENV PATH="/apps/jupyterlab-desktop/conda/bin:${PATH}"
-RUN python -m pip install 'numpy>=1.19.2' 'pandas>=1.3.0' 'scipy>=1.7.0' \
-			  'scikit-learn>=0.24.2' 'tensorflow>=2.5.0' 'torch>=1.9.0' \
-			  'matplotlib>=3.4.2' 'seaborn>=0.11.1' \
-			  'nltk>=3.6.2' 'spacy>=3.1.1' \
-			  'joblib>=1.0.1' 'tqdm>=4.61.2' \
-			  'jupyter>=1.0.0' 'ipykernel' \
-			  'streamlit>=0.83.0' \
-			  'opencv-python>=4.5.3' 'Pillow>=8.3.1'
+
+RUN mamba create -y --override-channels --channel=conda-forge --name=bioinformatics_env \
+    # Core Libraries \
+    'numpy>=1.19.2' 'pandas>=1.3.0' 'scipy>=1.7.0' \
+    # Machine Learning Libraries : \
+    # under conda torch is named pytorch \
+    'scikit-learn>=0.24.2' 'tensorflow>=2.5.0' 'pytorch>=1.9.0' \
+    # Data Visualization Libraries
+    'matplotlib>=3.4.2' 'seaborn>=0.11.1' \
+    # Natural Language Processing Libraries
+    'nltk>=3.6.2' 'spacy>=3.1.1' \
+    # Misc Libraries
+    'joblib>=1.0.1' 'tqdm>=4.61.2' \
+    # Streamlit for Web Apps
+    'streamlit>=0.83.0' \
+    # Utilities : \
+    # under conda opencv-python is opencv \
+    #             Pillow is pillow \
+    'opencv>=4.5.3' 'pillow>=8.3.1' 
 
 ENV APP_SPECIAL="jupyterlab-desktop"
 ENV APP_CMD=""
