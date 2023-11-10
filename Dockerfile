@@ -36,7 +36,9 @@ RUN mamba create -y --override-channels --channel=conda-forge --name=bioinformat
     # Utilities : \
     # under conda opencv-python is opencv \
     #             Pillow is pillow \
-    'opencv>=4.5.3' 'pillow>=8.3.1' 
+    'opencv>=4.5.3' 'pillow>=8.3.1' \
+    # Survival Analysis \
+    'lifelines' 'scikit-survival'
 
 ENV APP_SPECIAL="jupyterlab-desktop"
 ENV APP_CMD=""
