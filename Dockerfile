@@ -30,8 +30,11 @@ RUN mamba create -y --override-channels --channel=conda-forge --name=PHI_env \
     'lifelines' 'scikit-survival' \
     'nibabel' 'nilearn' 'dipy' 'pysurfer'
 
+SHELL ["conda", "run", "-n", "PHI_env", "/bin/bash", "-c"]
+
+RUN pip install deepbrain tedana
+
 ENV APP_SPECIAL="jupyterlab-desktop"
-#ENV APP_SPECIAL="terminal"
 ENV APP_CMD=""
 ENV PROCESS_NAME=""
 ENV APP_DATA_DIR_ARRAY=".jupyter"

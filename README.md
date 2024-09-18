@@ -1,6 +1,6 @@
 ## jupyterlab
 
-This integrates jupyter-lab into the PHI. A customized environment is created with included nibabel, nilearn, dipy, pysurfer.
+This integrates jupyter-lab into the PHI. A customized environment is created with included nibabel, nilearn, dipy, pysurfer, deepbrain and tedana.
 
 ## Acknowledgement
 
