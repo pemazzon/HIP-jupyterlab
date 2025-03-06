@@ -19,23 +19,32 @@ WORKDIR /apps/${APP_NAME}
 
 ENV PATH="/apps/jupyterlab-desktop/conda/bin:${PATH}"
 
-RUN mamba create -y --override-channels --channel=conda-forge --name=PHI_env \
+# There's a default environment shipped 
+# from the base image called jlab_env
+# We install everything inside there!
+RUN mamba install -y --override-channels --channel=conda-forge \
     'numpy' 'pandas' 'scipy' \
-    'scikit-learn' 'tensorflow' 'pytorch' \
+    'scikit-learn' 'tensorflow' 'pytorch' 'pysurfer' \
     'matplotlib' 'seaborn' \
     'nltk' 'spacy' \
     'joblib' 'tqdm' \
     'streamlit' \
     'opencv' 'pillow' \
     'lifelines' 'scikit-survival' \
-    'nibabel' 'nilearn' 'dipy' 'pysurfer'
+    'nibabel' 'nilearn' 'dipy'
 
-SHELL ["conda", "run", "-n", "PHI_env", "/bin/bash", "-c"]
+# For some reason I'm no more able to create a new env and
+# get jupyter-lab to digest it. So I'm using the default jlab_env
+SHELL ["mamba", "run", "-n", "jlab_env", "/bin/bash", "-c"]
 
-RUN pip install deepbrain tedana
+RUN pip install deepbrain
 
 ENV APP_SPECIAL="jupyterlab-desktop"
-ENV APP_CMD=""
+# guess what: APP_CMD_PREFIX gets overwritten from 
+# a-i-b/services/scripts/run-app.sh in case you're
+# running jupyterlab-desktop. How about adding a note
+# somewhere?
+ENV APP_CMD_PREFIX=""
 ENV PROCESS_NAME=""
 ENV APP_DATA_DIR_ARRAY=".jupyter"
 ENV DATA_DIR_ARRAY=""
